@@ -6,6 +6,29 @@
   <title>Bootstrap Image Gallery with Slide Animation</title>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
+
+.mobile-text {
+      padding: 20px;
+      font-size: 29px;
+      color: red;
+      margin-left: 20px;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      font-weight: 700;
+      position: relative;
+      margin-right: 50px;
+    }
+
+    /* Heart image */
+    .heart-img {
+      position: absolute;
+      top: 45%;
+      left: 42%;
+      transform: translate(-50%, -50%);
+      background-size: cover;
+      width: 80px; /* Adjust heart size */
+      height: auto;
+    }
+
     .gallery-container {
       position: relative;
       height: 500px; /* Adjust height as needed */
@@ -73,7 +96,19 @@
 </head>
 <body>
 
-<div class="container mt-5">
+    <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="d-md-none mobile-text">
+              <img src="heart.png" class="heart-img" alt="Heart"> <!-- Heart image -->
+              <p>LOVE</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+<div class="container mt-2">
   <div class="gallery-container" id="gallery">
     <!-- Gallery Cards -->
     <div class="gallery-card card active">
