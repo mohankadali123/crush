@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bootstrap Image Gallery with Slide Animation</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .gallery-container {
+      position: relative;
+      height: 500px; /* Adjust height as needed */
+      overflow: hidden;
+    }
+    .gallery-card {
+      position: absolute;
+      top: 0;
+      left: 100%;
+      width: 100%;
+      height: 100%;
+      transition: left 0.5s ease-in-out;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center; /* Center text horizontally */
+    }
+    .gallery-card.active {
+      left: 0;
+    }
+    .gallery-card.prev {
+      left: -100%;
+    }
+    .gallery-card img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+    .card-text {
+      position: absolute;
+      bottom: 20px; /* Adjust vertical position */
+      width: 100%; /* Ensure text spans the full width of the image */
+      color: white; /* Text color */
+      font-size: 18px; /* Adjust font size as needed */
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Optional: Add a text shadow for better visibility */
+    }
+    /* Falling hearts animation */
+    @keyframes falling {
+      0% {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(100vh);
+        opacity: 1;
+      }
+    }
+    .falling-hearts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none; /* Allow click-through */
+    }
+    .heart {
+      position: absolute;
+      width: 45px; /* Adjust heart size */
+      height: 45px; /* Adjust heart size */
+      background-image: url('heart.png'); /* Path to heart image */
+      background-size: cover;
+      animation: falling 5s linear infinite;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container mt-5">
+  <div class="gallery-container" id="gallery">
+    <!-- Gallery Cards -->
+    <div class="gallery-card card active">
+      <img src="img1.jpg" class="card-img-top" alt="Image 1">
+      <div class="card-text bg-dark">Do you have a name, or can I call you mine?</div>
+    </div>
+    <div class="gallery-card card">
+      <img src="img2.jpg" class="card-img-top" alt="Image 2">
+      <div class="card-text bg-dark">Are you a magician? Because whenever I look at you, everyone else disappears</div>
+    </div>
+    <div class="gallery-card card">
+      <img src="img3.jpg" class="card-img-top" alt="Image 3">
+      <div class="card-text bg-dark">Do you have a map? I keep getting lost in your eyes</div>
+    </div>
+    <div class="gallery-card card">
+      <img src="img4.jpg" class="card-img-top" alt="Image 4">
+      <div class="card-text bg-dark">Do you have a Band-Aid? Because I just scraped my knee falling for you</div>
+    </div>
+    <div class="gallery-card card">
+      <img src="img5.jpg" class="card-img-top" alt="Image 5">
+      <div class="card-text bg-dark">I must be a snowflake because I've fallen for you</div>
+    </div>
+    <div class="gallery-card card">
+        <img src="img6.jpg" class="card-img-top" alt="Image 5">
+        <div class="card-text bg-dark">I must be a snowflake because I've fallen for you</div>
+      </div>
+    <div class="gallery-card card">
+      <img src="img1.jpg" class="card-img-top" alt="Image 6">
+      <div class="card-text bg-dark">Do you have a name, or can I call you mine?</div>
+      
+      <!-- Falling hearts -->
+      <div class="falling-hearts">
+        <div class="heart"></div>
+        <div class="heart" style="left: 20%; animation-delay: 1s;"></div>
+        <div class="heart" style="left: 40%; animation-delay: 2s;"></div>
+        <div class="heart" style="left: 60%; animation-delay: 3s;"></div>
+        <div class="heart" style="left: 80%; animation-delay: 4s;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Buttons -->
+  <div class="text-center mt-3">
+    <button id="prev" class="btn btn-primary">Previous</button>
+    <button id="next" class="btn btn-primary">Next</button>
+  </div>
+</div>
+
+<!-- Audio for the last image -->
+<audio id="end-audio" src="song.mp3" type="audio/mp3"></audio>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  $(document).ready(function(){
+    let currentIndex = 0;
+    const cards = $('.gallery-card');
+    const totalCards = cards.length;
+
+    function showCard(index) {
+      cards.removeClass('active prev');
+      cards.eq(currentIndex).addClass('prev');
+      cards.eq(index).addClass('active');
+      currentIndex = index;
+
+      if (index === totalCards - 1) {
+        $('#end-audio')[0].play();
+      }
+    }
+    
+    $('#next').click(function() {
+      if (currentIndex < totalCards - 1) {
+        showCard(currentIndex + 1);
+      }
+    });
+
+    $('#prev').click(function() {
+      if (currentIndex > 0) {
+        showCard(currentIndex - 1);
+      }
+    });
+
+    // Initial display
+    showCard(currentIndex);
+    showCard(1);
+  });
+</script>
+
+</body>
+</html>
